@@ -1,0 +1,428 @@
+/* Reset CSS */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #bfbfbf,  #ffffff);
+    background-color: #eae0e0;
+}
+/* Add border and shadow to the HTML element */
+html {
+    border: 1px solid #ccc; /* Add border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add slight shadow */
+}
+
+
+/* Header Styles */
+h1 {
+    
+    top: 0%;
+    text-align: center;
+    background-color: #000000;
+    color: #fff;
+    padding: 20px 0;
+    margin: 0;
+}
+h2{
+    font-size: small;
+}
+/* Logo Image Styles */
+h1 img {
+   
+    max-width: 150px;
+    height: auto;
+}
+
+/* Messenger Button Styles */
+#messenger {
+    
+    position: fixed;
+            top: 20px;
+            /* left: 200px; */
+            right: 20px;
+}
+
+/* Messenger Button Image Styles */
+#messenger button img {
+    width: 30px; /* Adjust the width */
+    height: 30px; /* Adjust the height */
+}
+
+/* Messenger Button Styles */
+#messenger button {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Messenger Button Hover Styles */
+#messenger button:hover {
+    background-color: #0056b3;
+}
+
+
+/* User Info Styles */
+#user-info {
+    /* position: fixed;
+            top: 0px;
+            left: 20px; */
+    font-size: medium;
+    position: fixed;
+    /* top: px; */
+    margin-top: 10px;
+    margin-left: 10px;
+   
+    /* background-color: #889aae; */
+    color: #000000;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+/* Profile Picture Styles */
+#user-info img {
+    
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+
+/* Post Container Styles */
+#post-container {
+    
+    text-align: center;
+    margin-top: 100px;
+}
+#post-container2 {
+    
+    text-align: center;
+    margin-top: 100px;
+}
+/* Video Styles */
+.post {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px; /* Increased margin to create more space below the video */
+}
+
+/* Video Styles */
+.post video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Adjust margin to create space between video and buttons */
+}
+.post video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Actions Styles */
+.actions {
+    position: absolute;
+    bottom: -30px; /* Adjust this value to add space between the video and buttons */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    
+}
+
+.actions button img {
+    
+    width: 30px;
+    height: 30px;
+}
+.actions button:hover{
+    background-color: #cf8fbc
+    
+}
+/* Comment Form Styles */
+#commentForm {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Comment Textarea Styles */
+#comment {
+    width: 31%;
+    height: 31px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Submit Button Styles */
+button[type="submit"] {
+    font-weight: bold;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover Styles */
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+/* Add the new CSS styles here */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+/* Unblock User Button Styles */
+button {
+    font-size: 10px;
+    padding: 10px 20px;
+    background-color: #af1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/* Hover effect for the comment form */
+#commentForm:hover textarea {
+    border-color: #007bff; /* Change border color on hover */
+}
+
+/* #commentForm:hover button[type="submit"] {
+    background-color: #0056b3; /* Change background color of submit button on hover */
+/* } */
+/* Hover effect for user profile and info */
+/* #user-info:hover {
+    background-color: #c0c0c0; /* Change background color on hover */
+    /* color: #fff; /* Change text color on hover */
+/* } */
+/* Warning Message Styles */
+/* Warning Message Styles */
+/* Add this CSS to your existing stylesheet */
+#messenger-box {
+    /* position: fixed; */
+    display: none;
+    /* Hide the messenger box initially */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 999;
+}
+
+#post-options{
+    display: none;
+    /* Hide the messenger box initially */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+#post-options button{
+    text-align: center;
+    background-color: #af1a1a;
+    border-radius: 10px;
+    margin-top: 0px;
+    margin-right: 4px;
+    margin-left: 4px;
+    width: 70px;
+   
+}
+#search-container {
+    
+    position: fixed;
+    top: 30px;
+    left: 20px;
+    
+}
+#search-input:hover {
+    border-color: #007bff;
+    box-shadow: 1 1 10px rgba(0, 123, 255, 0.5); /* Adjusted box-shadow */
+}
+#search-input {
+    font-size: 12px;
+    padding: 10px;
+    border: 1px solid #bb2ac5;
+    width:130px;
+    border-radius: 100px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Add smooth transition */
+}
+#search-input:focus {
+    border-color: #00ff15;
+    box-shadow: 1 1 10px rgba(13, 145, 73, 0.7); /* Highlight box-shadow on focus */
+}
+#search-button {
+    width: 70px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 2px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-left: 10px;
+    outline: none;
+}
+
+#search-results {
+    margin-top: 10px;
+}
+
+#search-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#search-results ul li {
+    margin-bottom: 5px;
+}
+#search-button:hover {
+    background-color: #0056b3; /* Change the opacity on hover */
+}
+#user-info:hover{
+    background-color: #f8d7da; /* Change the opacity on hover */
+}
+/* Default styles */
+/* Add your default styles here */
+
+/* Media query for screens smaller than 768px (e.g., smartphones) */
+@media (max-width: 767px) {
+    /* Adjust styles for smaller screens */
+    #user-info {
+        text-align: center; /* Center align user info */
+        margin-bottom: 20px; /* Add some space below user info */
+    }
+
+    #post-container {
+        padding: 10px; /* Add padding to post container */
+    }
+
+    .post {
+        width: 100%; /* Make posts full width */
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px; /* Add space above action buttons */
+    }
+
+    .actions button {
+        width: 48%; /* Make action buttons take up almost full width */
+    }
+
+    #commentForm {
+        margin-top: 20px; /* Add space above comment form */
+    }
+
+    #search-container {
+        text-align: center; /* Center align search container */
+        margin-bottom: 20px; /* Add some space below search container */
+    }
+
+    #search-input {
+        width: 70%; /* Make search input take up most of the width */
+        margin-bottom: 10px; /* Add some space below search input */
+    }
+
+    #search-button {
+        width: 30%; /* Make search button take up remaining width */
+    }
+}
+
+
+/* Media query for screens between 768px and 1023px (e.g., tablets) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Adjust styles for medium-sized screens */
+}
+
+/* Media query for screens larger than 1023px (e.g., desktops) */
+@media (min-width: 1024px) {
+    /* Adjust styles for larger screens */
+}
+:root {
+    --background-color: #ffffff; /* Default light mode background color */
+    --text-color: #000000; /* Default light mode text color */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode {
+    --background-color: #333333; /* Dark mode background color */
+    --text-color: #ffffff; /* Dark mode text color */
+}
+#comments-container {
+    margin-top: 20px;
+    margin-left: 495px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    height: 40px;
+    width: 460px;
+    overflow-y: auto;
+    /* text-align: center; */
+}
+
+#comments-container p {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+#comments-container p:last-child {
+    border-bottom: none;
+}
+
+#comments-container p:hover {
+    background-color: #eee2e2;
+}
+.comment-author {
+    font-weight: bold;
+    margin-right: 5px;
+}
