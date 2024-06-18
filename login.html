@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watcho/User Login</title>
+    <link rel="stylesheet" href="logstyle.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="login-container">
+        <img width="200px"   src="icon2.png" alt="Website Logo" class="logo">
+        <form id="loginForm">
+            <!-- <label for="username">Username/Email:</label> -->
+            <input type="text" id="username" placeholder="Username or Email" name="username" class="login-field" required>
+            <!-- <label for="password">Password:</label> -->
+            <input type="password" id="password" placeholder="Password" name="password" class="login-field" required>
+            <!-- <button type="submit">Login</button> -->
+    
+            
+            <button type="submit" class="login-button">Log In</button>
+        </form>
+        
+        <div class="separator">Don't have an Account ? <a href="registration.html">Sign Up</a></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+    
+            // Send login data to backend
+            fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Log the response data to check if it's received correctly
+                alert(data.message); // Display the success message
+                // Store the username in localStorage
+                localStorage.setItem('username', data.username);
+                // Redirect to the profile page
+                // window.location.href = 'profile2.html';
+                window.location.href = 'index.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while logging in'); // Display an error message if something goes wrong
+            });
+        });
+    </script>
+</body>
+</html>
