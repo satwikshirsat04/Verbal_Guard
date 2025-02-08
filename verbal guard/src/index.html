@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watcho.com</title>
+    <link rel="stylesheet" href="./styles/s1.css">
+    <style>
+        /* Add animation for the like button */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+         
+        /* Add animation for the messenger box */
+        @keyframes slideIn {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+         /* Animation for the post button */
+         @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .post-button {
+            animation: pulse 0.5s ease;
+        }
+        /* Apply animations */
+        .like-button img {
+            transition: transform 80.0s ease;
+        }
+
+        .like-button.liked img {
+            animation: pulse 0.5s ease infinite;
+        }
+
+        #messenger-box {
+            animation: slideIn 0.5s ease forwards;
+        }
+        #post-options{
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    
+   
+    <div id="messenger">
+        <button onclick="addPost()" ondblclick="closePost()">Post</button>
+        <div id="post-options" style="display: none;">
+            <div><button onclick="addReel()">Reel</button>
+            <button onclick="addStory()">Story</button></div>
+        </div>
+        <button onclick="openMessenger()" ondblclick="closeMessenger()">Messenger</button>
+        <div id="messenger-box" style="display: none;">
+            <p>1. Hi...How are You!</p> 
+            <p>2. Hello! What's up?</p>
+            <div id="warning-message" style="display: none;">
+                <p><strong>Warning:</strong> Hate speech detected in your comment!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search...">
+        <button id="search-button" onclick="searchKeywords()">Search</button>
+        <div id="search-results" style="display: none;">
+            <ul id="keywords-list"></ul>
+        </div>
+    </div>
+
+    <h1>
+        <img src="../public/icon.png" alt="">
+    </h1>
+    <div id="user-info">
+        <img src="../public/user.png" alt="Profile Picture">
+        <h2><span id="username">Username</span></h2>
+    </div>
+
+    <div id="post-container">
+        <h2>User @xyz</h2>
+        <div class="post">
+            <video controls width="480px" src="../public/sea.mp4"></video>
+            <div class="actions">
+                <button onclick="toggleLike()"><img src="../public/like.png" alt="Like"></button>
+                <button><img src="../public/share.png" alt="Share"></button>
+            </div>
+        </div>
+        
+        <form id="commentForm">
+            <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Write your comment here..."></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="comments-container"></div>
+    </div>
+    
+    <button onclick="unblockUser()">Unblock User</button>
+    <div id="unblockUserForm" style="display: none;">
+        <h2>Enter the unblocking password:</h2>
+        <input type="password" id="unblockPassword" placeholder="Enter password...">
+        <button onclick="unblockUser()">Submit</button>
+    </div>
+    <footer>
+        
+    </footer>
+    <!-- <script src="profile.js"></script> -->
+    <!-- <script>
+        // Toggle like status
+        let isLiked = false;
+
+        function toggleLike() {
+            isLiked = !isLiked;
+            const likeButton = document.querySelector('.actions button:nth-child(1)');
+            likeButton.textContent = isLiked ? 'Unlike' : 'Like';
+        }
+
+        // Rest of your JavaScript code...
+
+    </script> -->
+     <!-- <script src="profile.js"></script> -->
+     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the username from localStorage
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('username').innerText = username;
+            }
+        });
+
+        document.getElementById('commentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Get the username from localStorage
+            const username = localStorage.getItem('username');
+            if (!username) {
+                alert('Please log in to submit a comment');
+                return;
+            }
+
+            // Add the username to the data object
+            data.username = username;
+
+            // Check if user is blocked
+            if (isUserBlocked(username)) {
+                alert('You are blocked from making comments.');
+                return;
+            }
+
+            // Check if user has any warnings stored in localStorage
+            let userWarnings = localStorage.getItem('userWarnings') ? JSON.parse(localStorage.getItem('userWarnings')) : {};
+
+            // Increment the user's warning count or set it to 1 if it's their first warning
+            userWarnings[username] = userWarnings[username] ? userWarnings[username] + 1 : 1;
+
+            fetch('http://localhost:5000/post_comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Log the response data to check if it's received correctly
+                    alert(data.message); // Display the success message
+                    document.getElementById('comment').value = ''; // Clear the comment textarea after submission
+
+                    // Display hate speech warning message if received
+                    if (data.warning_message) {
+                        let warningMsg = data.warning_message;
+                        // Check if user has already received warnings
+                        if (userWarnings[username]) {
+                            warningMsg += "\n\nYou have received " + userWarnings[username] + " warning(s) for hate speech.";
+                        }
+                        // Check if user has already received 2 warnings
+                        if (userWarnings[username] && userWarnings[username] >= 2) {
+                            // Block the user
+                            warningMsg += "\nYou have been blocked for repeated hate speech!";
+                            blockUser(username);
+                        }
+                        // Display the updated warning message
+                        document.getElementById('messenger-box').innerText = warningMsg;
+                        document.getElementById('messenger-box').style.display = 'block';
+                    }
+
+                    // Store the updated user warnings count in localStorage
+                    localStorage.setItem('userWarnings', JSON.stringify(userWarnings));
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while submitting the comment'); // Display an error message if something goes wrong
+                });
+        });
+        document.getElementById('commentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const commentInput = document.getElementById('comment');
+            const commentText = commentInput.value.trim();
+            const username = localStorage.getItem('username') || 'Anonymous'; // Default to 'Anonymous' if no username is stored
+            if (commentText) {
+                const commentsContainer = document.getElementById('comments-container');
+                const newComment = document.createElement('p');
+                const authorSpan = document.createElement('span');
+                authorSpan.textContent = username + ':';
+                authorSpan.className = 'comment-author';
+                newComment.appendChild(authorSpan);
+                newComment.append(' ' + commentText);
+                commentsContainer.appendChild(newComment);
+                commentInput.value = ''; // Clear the textarea after adding the comment
+            }
+        });
+
+        function openMessenger() {
+            document.getElementById('messenger-box').style.display = 'block';
+        }
+        function closeMessenger() {
+            document.getElementById('messenger-box').style.display = 'none';
+        }
+        function addPost() {
+            document.getElementById('post-options').style.display = 'block';
+        }
+        function closePost() {
+            document.getElementById('post-options').style.display = 'none';
+        }
+        function blockUser(username) {
+            // Add blocking logic here
+            // For example, you can disable the comment form
+            document.getElementById('comment').disabled = true;
+        }
+
+        function isUserBlocked(username) {
+            // Add logic to check if the user is blocked
+            // For example, you can check if the comment form is disabled
+            return document.getElementById('comment').disabled;
+        }
+        let isLiked = false;
+
+        function toggleLike() {
+            isLiked = !isLiked;
+            const likeButton = document.querySelector('.actions button:nth-child(1)');
+            likeButton.innerHTML = isLiked ? '<img src="../public/liked.png" alt="Liked">' : '<img src="../public/like.png" alt="Like">';
+            // likeButton.style.backgroundColor = isLiked ? 'lightpink' : 'transparent'; // Change background color
+        }
+        // function unblockUser() {
+        //     const unblockCredentials = prompt('Enter credentials to unblock user:');
+        //     // Add logic to verify credentials and unblock the user
+        //     // For example, you can check if the entered credentials match a predefined value
+        //     if (unblockCredentials === 'secret') {
+        //         document.getElementById('comment').disabled = false; // Enable the comment form
+        //         alert('User unblocked successfully');
+        //     } else {
+        //         alert('Incorrect credentials');
+        //     }
+        // }
+
+
+        function unblockUser() {
+            // Implement logic to unblock the user
+            // For example, you can prompt the user to enter credentials
+            const unblockPassword = document.getElementById('unblockPassword').value;
+            const password = prompt("Enter password to unblock user:");
+
+            // Check if the password is correct
+            if (password === "your_password") {
+                // Unblock the user
+                // Add your unblocking logic here, such as removing the user from the blocked list
+                alert("User unblocked successfully!");
+                document.getElementById('unblockUserForm').style.display = 'none'; // Hide the unblock form
+                document.getElementById('commentForm').style.display = 'block'; // Enable comment box
+                // Reset user warnings count to 0
+                localStorage.setItem('userWarnings', JSON.stringify({}));
+            } else {
+                // If the password is incorrect, display an error message
+                alert("Incorrect password. User remains blocked.");
+            }
+        }
+
+        // Get the messenger button and messenger box elements
+        const messengerButton = document.getElementById('messenger-button');
+        const messengerBox = document.getElementById('messenger-box');
+
+        // Add event listener to the messenger button
+        messengerButton.addEventListener('click', function() {
+            // Toggle the display of the messenger box
+            messengerBox.style.display = messengerBox.style.display === 'none' ? 'block' : 'none';
+        });
+
+        function searchKeywords() {
+            var input = document.getElementById('search-input').value.toLowerCase();
+            var keywordsList = document.getElementById('keywords-list');
+            var matchedKeywords = [];
+
+            // Add your keyword matching logic here
+            // For demonstration, let's assume an array of sample keywords
+            //var sampleKeywords = ["technology", "programming", "web development", "javascript", "html", "css", "python", "java", "coding"];
+
+            sampleKeywords.forEach(function (keyword) {
+                if (keyword.includes(input)) {
+                    matchedKeywords.push(keyword);
+                }
+            });
+
+            // Display matched keywords
+            keywordsList.innerHTML = "";
+            matchedKeywords.forEach(function (keyword) {
+                var li = document.createElement("li");
+                li.textContent = keyword;
+                keywordsList.appendChild(li);
+            });
+
+            // Show search results
+            document.getElementById('search-results').style.display = 'block';
+        }
+
+    </script>
+</body>
+
+</html>

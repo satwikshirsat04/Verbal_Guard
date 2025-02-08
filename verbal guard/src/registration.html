@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watcho/User Registration</title>
+    <link rel="stylesheet" href="./styles/logstyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="registration-container">
+            <img width="200px" src="/public/icon2.png" alt="Website Logo" class="logo">
+            <form id="registrationForm">
+                <input type="text" id="username" placeholder="Username" name="username" class="registration-field" required>
+                <input type="email" id="email" placeholder="Email" name="email" class="registration-field" required>
+                <input type="password" id="password" placeholder="Password" name="password" class="registration-field" required>
+                <button type="submit" class="registration-button">Sign Up</button>
+            </form>
+            <div class="separator">Already Have an Account? <a href="../src/login.html">Log In</a></div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Send registration data to backend
+            fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Log the response data to check if it's received correctly
+                alert(data.message); // Display the success message
+                // Redirect to login page
+                window.location.href = './src/login.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while registering the user'); // Display an error message if something goes wrong
+            });
+        });
+    </script>
+</body>
+</html>
